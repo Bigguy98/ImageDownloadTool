@@ -1,0 +1,23 @@
+{
+  "name": "download-image-tool",
+  "version": "1.0.0",
+  "description": "tool for automatic download images from websites",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "download",
+    "images"
+  ],
+  "author": "Vu Thanh Tung Dep Trai",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "engines": {
+    "node": "12.13.0",
+    "npm": "6.12.0"
+  }
+}

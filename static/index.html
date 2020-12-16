@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" style="height:100%;">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<head>
+	<style type="text/css" media="screen">
+		.all{
+			height: 100%;
+		}
+		.bg{
+			height: 35%;
+			background: url(bg-drum.png) no-repeat 0 0 ;
+			
+		}
+		.search{
+			width: 50%;
+			margin-left: 25%;
+			padding-top: 120px;
+		}
+		.input-group-text{
+			    background: coral;
+    			color: white;
+		}
+		.content{
+			background-color: beige;
+			height:65%;
+		}
+		.body-content{
+			margin-left: 15%;
+			margin-right: 15%;
+			background-color: #FFF !important;
+			width: 70%;
+  			display: flex;
+  			flex-direction: column;
+  			justify-content: center;
+  			align-items: center;
+  			height: 100%;
+		}
+		.row{
+			padding-left: 10%;
+			padding-right: 10%;
+			width: 100%;
+			height: 100%;
+		}
+		hr{
+			border-top: 5px solid rgba(0,0,0,.1);
+			width: 100%;
+		}
+		span{
+			font-weight: bold;
+			font-family: FANGSONG;
+		}
+		p{
+			font-size: 13px;
+			font-family: FANGSONG;
+		}
+		img{
+			margin-top: 15px;
+			margin-bottom: 15px;
+		}
+		h3{
+			color: cadetblue;
+			text-align: center;font-family: FANGSONG; font-weight: bold;
+		}
+		body{
+			background-color: beige;
+			height: 100%;
+		}
+
+		#notiText {
+			margin-left: 5%;
+		}
+		#progressBar {
+		  width: 90%;
+		  margin: 10px auto;
+		  height: 22px;
+		  background-color: #0A5F44;
+		}
+
+		#progressBar div {
+		  height: 100%;
+		  text-align: right;
+		  padding: 0 10px;
+		  line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+		  width: 0;
+		  background-color: #CBEA00;
+		  box-sizing: border-box;
+		}
+	</style>
+</head>
+<body>
+	<div class="all">
+	<div class="bg">
+		
+		<div class="search">
+			<div class="input-group mb-3">
+  <input id="url" type="text" class="form-control bg-dark text-white" placeholder="Tìm kiếm" aria-label="Recipient's username" aria-describedby="basic-addon2">
+  <button type="button" class="btn btn-primary" onclick="getImages()">Get Images</button>
+</div>
+		</div>
+	
+	</div>
+	<div class="content">
+		<div class="body-content">
+			<br>
+			<h3>HƯỚNG DẪN SỬ DỤNG</h3>
+			<div class="row">
+				<div class="col-4">
+					<hr>
+					<span>Nhập link website cần copy ảnh</span>
+					<img src="ninja.jpg" alt="" width="100%" height="120px">
+					<p>Một số trang web do giao diện được tạo ra từ javascript (sử dụng ReactJs, AngularJs, ...) nên không áp dụng được cách này.
+					</p>
+				</div>
+				<div class="col-4">
+					<hr>
+					<span>Nhấn Get Images và chờ đợi</span>
+					
+					<img src="ninja.jpg" alt="" width="100%" height="120px">
+					<p>Bạn có thể kiếm tra trang web có thể tải được ảnh theo cách này hay không bằng cách xem page source.
+					Nếu dùng Chrome, nhấn Ctrl +U hoặc chuột phải chọn "View page source".</p>
+				</div>
+				<div class="col-4">
+					<hr>
+					<span>Nhấn Download trong thông báo</span>
+					
+					<img src="ninja.jpg" alt="" width="100%" height="120px">
+					<p>Nếu page source chỉ gồm một vài function javascript thì xin chia buồn với bạn :))</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Tool for everyone</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+
+	      	<!-- <div class="progress">
+			  	<div id="progressBar" class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+			</div> -->
+
+			<div id="notiText"></div>
+			<div id="progressBar">
+			  <div></div>
+			</div>
+
+			<a id="rarFile" href="/rars/note.txt" download="" hidden="">file</a>
+	        
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" onClick="downl()" class="btn btn-primary" id="saveBtn">Tải về máy</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<script type="text/javascript">
+		function downl() {
+			document.getElementById('rarFile').click();
+			// reset url
+			$('#url').val('');
+		}
+		var progressIsRunning = true;
+		const MAX_TIME_TO_WAIT = 120;
+
+		$( document ).ready(function() {
+			// something init here
+
+			$('#myModal').on('hidden.bs.modal', function (e) {
+				progressIsRunning= false;
+			  // do something...
+			});
+			$('#myModal').on('show.bs.modal', function (e) {
+				progressIsRunning= true;
+				$('#saveBtn').attr("disabled", true);
+			  // do something...
+			})
+
+		});
+
+		function progress(timeleft, timetotal, $element) {
+		    var progressBarWidth = (timetotal - timeleft) * $element.width() / timetotal;
+		    $element.find('div').animate({ width: progressBarWidth }, 500);
+		    $('#notiText').html("Đã tải xong: " + Math.round((timetotal - timeleft)*100/timetotal) + "%" )
+		    if(timeleft > 0) {
+		        setTimeout(function() {
+		            if (progressIsRunning) progress(timeleft - 1, timetotal, $element);
+		        }, 1000);
+		    }
+		};
+
+		function callApi(url) {
+			const serverUrl = "http://localhost:3000/api"
+			$.ajax({
+				url: serverUrl + "?url=" + url,
+				type: "GET",
+				success: function(result,status,xhr){
+			    	console.log(result);
+			    	if (result.code === 0) {
+
+			    		$("#rarFile").attr("href", "/rars?file=" + result.message);
+			    		// stop process bar
+			    		progressIsRunning = false;
+			    		progress(0, MAX_TIME_TO_WAIT, $('#progressBar'));
+			    		$('#saveBtn').removeAttr('disabled');
+
+			    	}
+			    	else {
+			    		// something went wrong
+			    		progressIsRunning = false
+			    		alert("Đã có lỗi xảy ra!")
+			    		$('#myModal').modal('show');
+			    	}
+		  		},
+		  		error: function(xhr,status,error) {
+		  			console.log(error);
+		  		}
+		  	});
+		}
+
+		function getImages() {
+			// preprocess url
+			var str = $('#url').val();
+			str = (str.includes("https://") ? "" : "https://") + str;
+			str = str + (str[str.length-1] === "/" ? "": "/");
+			if (str === "https://" || !str.includes('.')) {
+				alert("Tên website không hợp lệ")
+				return;
+			}
+
+			callApi(str)
+
+			$('#myModal').modal('show');
+
+
+			progress(MAX_TIME_TO_WAIT, MAX_TIME_TO_WAIT, $('#progressBar'));
+		}
+	</script>
+</div>
+</body>
+</html>
